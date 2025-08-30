@@ -1,0 +1,36 @@
+# Stop containers
+docker-compose down -v
+# Start containers
+docker compose up -d
+
+docker ps
+
+# postgres access
+docker exec -it ewallet-microservices-postgres-1 psql -U ewallet_admin -d ewallet
+
+psql -h localhost -p 5433 -U ewallet_admin -d ewallet
+
+# radis access
+docker exec -it ewallet-microservices-redis-1 redis-cli ping
+
+# kafka access
+docker exec -it ewallet-microservices-kafka-1 kafka-topics --list --bootstrap-server localhost:9092
+
+# keycloak access
+http://localhost:8085
+
+# mvn commands
+mvn clean install -DskipTests
+mvn spring-boot:run
+
+# git commands
+# git init
+# git add .
+# git commit -m "Initial commit"
+# git branch -M main
+# git remote add origin https://github.com/your-username/your-repo.git
+# git push -u origin main
+
+for bash scripts safety
+# git config --global core.autocrlf input
+# git add --renormalize .

@@ -1,15 +1,22 @@
-service:
+services:
   postgres:
     image: postgres:16
     container_name: ewallet-postgres-1
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: ewallet_admin
+      POSTGRES_PASSWORD: 12345
       POSTGRES_DB: ewallet
+      TZ: Asia/Kolkata
     ports:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ewallet_admin -d ewallet"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   redis:
     image: redis:7-alpine
@@ -36,14 +43,14 @@ service:
 
   keycloak:
     image: quay.io/keycloak/keycloak:25.0
-    command: ["start-dev","--http-port=8085"]
+    command: [ "start-dev", "--http-port=8085" ]
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
     ports:
-      - "8085:8080"
+      - "8085:8085"
 
-  volumes:
-    postgres_data:
+volumes:
+  postgres_data:
 
 
