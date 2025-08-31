@@ -1,12 +1,12 @@
 services:
   postgres:
-    image: postgres:16
+    image: postgres:16.3
     container_name: ewallet-postgres-1
     environment:
       POSTGRES_USER: ewallet_admin
       POSTGRES_PASSWORD: 12345
       POSTGRES_DB: ewallet
-      TZ: Asia/Kolkata
+
     ports:
       - "5433:5432"
     volumes:

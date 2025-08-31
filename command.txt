@@ -8,13 +8,22 @@ docker ps
 # postgres access
 docker exec -it ewallet-microservices-postgres-1 psql -U ewallet_admin -d ewallet
 
-psql -h localhost -p 5433 -U ewallet_admin -d ewallet
+
 
 # radis access
-docker exec -it ewallet-microservices-redis-1 redis-cli ping
+docker exec -it ewallet-microservice-redis-1 redis-cli
+MONITOR
 
 # kafka access
-docker exec -it ewallet-microservices-kafka-1 kafka-topics --list --bootstrap-server localhost:9092
+docker exec -it ewallet-microservice-kafka-1 kafka-topics --list --bootstrap-server localhost:9092
+
+docker exec -it ewallet-microservice-kafka-1 kafka-topics --create --topic test-topic --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+
+docker exec -it ewallet-microservice-kafka-1 kafka-console-producer --topic test-topic --bootstrap-server localhost:9092
+
+docker exec -it ewallet-microservice-kafka-1 kafka-console-consumer --topic test-topic --bootstrap-server localhost:9092 --from-beginning
+
+
 
 # keycloak access
 http://localhost:8085

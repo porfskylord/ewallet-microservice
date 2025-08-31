@@ -1,0 +1,39 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/porfskylord/ewallet-config-repo
+          default-label: main
+          clone-on-start: true
+          search-paths: '{application}'
+          force-pull: true
+          skip-ssl-validation: true
+  security:
+    user:
+      name: user
+      password: 12345
+    filter:
+      order: 0
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+
+
+
+
+
